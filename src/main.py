@@ -10,20 +10,18 @@ import time
 import os
 from dotenv import load_dotenv
 
-# Set up Chrome options
-chrome_options = Options()
-# chrome_options.add_argument("--headless")  # Run in headless mode
-chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
-
-
 # Load environment variables from .env file
 load_dotenv()
 ATTENDANCE_URL = os.getenv("ATTENDANCE_URL")
 USERNAME_ABSENSI = os.getenv("USERNAME_ABSENSI")
 PASSWORD = os.getenv("PASSWORD")
+DEFAULT_ACTIVITY = os.getenv("DEFAULT_ACTIVITY")
+
+# Set up Chrome options
+chrome_options = Options()
+chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
 
 # Set up the WebDriver
-# service = Service(WEBDRIVER_PATH)
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 try:
@@ -50,7 +48,7 @@ try:
     # Fill in the shift time (08:00 - 17:00 as an example)
     shift_input = driver.find_element(By.ID, "note")
     shift_input.clear()
-    shift_input.send_keys("Development Backend API GO Unifikasi [BE] - Fixing catatan kemarin")
+    shift_input.send_keys(DEFAULT_ACTIVITY)
 
     # Select health condition (e.g., "Sehat" - Healthy)
     health_options = driver.find_elements(By.ID, "sehat")
